@@ -1,0 +1,318 @@
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #edeede;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Centering the top heading */
+header h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'MedievalSharp', cursive;
+    font-size: 2em;
+    letter-spacing: 2px;
+}
+
+/* --- FIXED DECOUPLED LAYOUT --- */
+
+#songSearch {
+    display: block !important;
+    width: 100% !important;
+    max-width: 600px;
+    margin: 0 auto 15px auto !important; /* Forces it to be its own centered row */
+    padding: 12px;
+    font-size: 1.1em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#tagFilter {
+    display: inline-block !important; /* Keeps it centered but on a new line */
+    width: auto !important;
+    min-width: 220px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+}
+/* --- TAG STYLES --- */
+
+/* Tags in the Table of Contents */
+.toc-tag {
+    font-size: 0.7em;
+    background-color: #eee;
+    color: #666;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+/* Tags in the main song display */
+.song-tags-display {
+    margin-bottom: 15px;
+}
+
+.song-tag {
+    display: inline-block;
+    font-size: 0.85em;
+    background-color: #3498db;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 15px;
+    margin-right: 6px;
+    font-weight: bold;
+}
+
+/* Options Container & Menu */
+#options-container { position: sticky; top: 10px; z-index: 1000; text-align: right; margin-bottom: 20px; }
+#options-toggle { padding: 8px 15px; cursor: pointer; background: #3498db; color: white; border: none; border-radius: 5px; font-weight: bold; }
+#options-menu { background: #eee; padding: 10px; border-radius: 5px; margin-top: 5px; display: none; gap: 8px; justify-content: flex-end; flex-wrap: wrap; border: 1px solid #ccc; }
+#options-menu button { padding: 6px 12px; cursor: pointer; border: 1px solid #bbb; border-radius: 3px; background: white; }
+
+/* Navigation & TOC */
+nav ul { list-style: none; padding: 0; }
+.toc-letter-header { font-size: 1.5rem; font-weight: bold; color: #2c3e50; margin: 30px 0 10px 0; border-bottom: 2px solid #3498db; padding-bottom: 5px; }
+nav li { margin-bottom: 12px; padding-left: 10px; line-height: 1.4; }
+nav a { text-decoration: none; color: #00AAFF; font-weight: 500; }
+
+/* Song Chunks */
+.song-chunk {
+    margin-bottom: 60px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 30px;
+    transition: background-color 0.3s ease;
+    contain: layout style;
+}
+
+.lyrics {
+    display: block !important;
+    white-space: pre-wrap !important;
+    font-size: 1.15em;
+    margin-top: 20px;
+    color: #333;
+    text-align: left;
+    unicode-bidi: isolate;
+    content-visibility: auto;
+}
+
+/* Toggles & Themes */
+body.dark-mode { background: #1a1a1a !important; color: #e0e0e0 !important; }
+.dark-mode h1 { color: #fff; }
+.dark-mode .lyrics { color: #ccc; }
+.dark-mode #options-menu { background: #333; border-color: #444; }
+.dark-mode #options-menu button { background: #444; color: white; border-color: #555; }
+.dark-mode #tagFilter { background: #333; color: white; border-color: #444; }
+
+/* Dark Mode Tags */
+.dark-mode .toc-tag {
+    background-color: #333;
+    color: #bbb;
+}
+
+.dark-mode .song-tag {
+    background-color: #2980b9;
+}
+
+/* Alignment */
+.center-align #toc ul,
+.center-align .song-chunk h1,
+.center-align .song-tags-display,
+.center-align .lyrics {
+    text-align: center !important;
+}
+.center-align nav li { padding-left: 0 !important; }
+
+.back-to-top { display: inline-block; margin-top: 20px; font-size: 0.9em; color: #999; text-decoration: none; }
+
+/* Favorites Styles */
+.fav-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    margin-left: 10px;
+    vertical-align: middle;
+    transition: transform 0.2s ease;
+    user-select: none;
+}
+.fav-btn:hover { transform: scale(1.2); }
+.heart-empty { color: #ccc; }
+.heart-full { color: #e74c3c; }
+
+.toc-heart {
+    font-size: 0.8rem;
+    margin-left: 5px;
+    display: none;
+}
+.is-favorite .toc-heart { display: inline; }
+
+#empty-fav-message {
+    display: none;
+    text-align: center;
+    padding: 40px;
+    font-style: italic;
+    color: #888;
+}
+
+.clear-favs-btn {
+    color: #e74c3c !important;
+    border-color: #e74c3c !important;
+}
+
+/* Highlight Animation */
+@keyframes highlight-flash {
+    0% { background-color: #fff5ad; }
+    100% { background-color: transparent; }
+}
+.highlight-target { animation: highlight-flash 2s ease-out; border-radius: 8px; }
+.dark-mode .highlight-target { animation-name: highlight-flash-dark; }
+@keyframes highlight-flash-dark {
+    0% { background-color: #444433; }
+    100% { background-color: transparent; }
+}
+
+#qr-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+#qr-modal.open {
+    display: flex;
+}
+#qr-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+#qr-content img {
+    max-width: 80vw;
+    max-height: 70vh;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+#qr-content p {
+    color: white;
+    font-size: 1em;
+    margin: 0;
+    text-align: center;
+}
+
+#site-logo {
+    display: block;
+    margin: 0 auto 20px auto;
+    width: 60%;
+    max-width: 400px;
+    min-width: 200px;
+    height: auto;
+}
+
+#faq-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+#faq-modal.open {
+    display: flex;
+}
+#faq-content {
+    background: #fff;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    padding: 30px;
+    cursor: default;
+    position: relative;
+    line-height: 1.7;
+}
+#faq-content h2 {
+    margin-top: 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+#faq-content p {
+    margin-bottom: 20px;
+}
+#faq-close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: #666;
+}
+#faq-close:hover {
+    color: #000;
+}
+.dark-mode #faq-content {
+    background: #2a2a2a;
+    color: #e0e0e0;
+}
+
+#banner-image {
+    display: block;
+    margin: 0 auto 20px auto;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+}
+
+
+/* 1. Kill any flex behavior from the header for these items */
+/* 2. Force the Search Div to take its own full line */
+
+
+/* 3. Force the Search Input to be centered */
+#songSearch {
+    display: block !important;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto !important;
+}
+
+/* 4. Force the Tag Div to take its own full line below the search */
+header {
+    display: flex;
+    flex-direction: column !important;
+    align-items: center; /* optional: centers contents nicely */
+}
+
+.search-wrap,
+.tags-wrap {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.search-wrap {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+/* 5. Center the actual dropdown */
+#tagFilter {
+    display: inline-block !important;
+    margin: 0 auto !important;
+    min-width: 200px;
+}

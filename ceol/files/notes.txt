@@ -1,0 +1,29 @@
+ to generate index.json of abc files
+ls abcfiles/*.abc | xargs -n 1 basename | jq -R . | jq -s . > abcfiles/index.json
+
+Acknowledgement to Country
+I'd just like to acknowledge the Elders, past and present, of the Jagera and Turrbal Nations who are the Traditional Custodians of Woolloongabba, on the river Maiwar, and the Land on which we meet today. I recognise that sovereignty was never ceded; I offer respect for, and solidarity with, their struggle for dignity and justice.
+
+
+michaeleskin.com/abctools/abctools.html
+
+
+https://www.youtube.com/watch?v=uSz6TQn0ZI8
+St Patrick's Day
+
+https://www.youtube.com/watch?v=TIiRKwsvvqA
+Whelan's
+
+
+
+FB Group Link
+https://www.facebook.com/groups/1527011278267149
+
+Tunebook Website
+https://gentlefolk.quest/ceol/
+
+Mailing List Signup
+https://mailchi.mp/20b58c98122a/mailing-list
+
+Brisbane Trad Instagram
+https://www.instagram.com/brisbanetrad/

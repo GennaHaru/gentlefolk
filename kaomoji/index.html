@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaomoji Database</title>
+    <style>
+        :root {
+            --bg: #1a1821;
+            --text: #e5e1eb;
+            --surface: #25222e;
+            --border: #383345;
+            --accent: #9d8ec4;
+            --search-focus: #635875;
+        }
+        body {
+            font-family: monospace, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        #search {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text);
+            border-radius: 10px;
+            margin-bottom: 16px;
+            outline: none;
+            flex-shrink: 0;
+        }
+        #search:focus {
+            border-color: var(--search-focus);
+        }
+        #container {
+            flex-grow: 1;
+            overflow-y: auto;
+            position: relative;
+        }
+        #grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 15px;
+            user-select: none;
+            transition: background 0.1s, border-color 0.1s;
+            white-space: nowrap;
+            height: 20px;
+            line-height: 20px;
+        }
+        .card:active {
+            background: var(--border);
+            border-color: var(--accent);
+        }
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--bg);
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-weight: bold;
+            display: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <input type="text" id="search" placeholder="Search kaomoji..." autocomplete="off">
+    <div id="container">
+        <div id="grid"></div>
+    </div>
+    <div id="toast">Copied!</div>
+
+    <script>
+        let database = [];
+        let filteredData = [];
+
+        const container = document.getElementById('container');
+        const grid = document.getElementById('grid');
+        const search = document.getElementById('search');
+        const toast = document.getElementById('toast');
+
+        const CHUNK_SIZE = 400;
+        let currentRenderedCount = 0;
+
+        function renderNextChunk() {
+            const nextBatch = filteredData.slice(currentRenderedCount, currentRenderedCount + CHUNK_SIZE);
+
+            const fragment = document.createDocumentFragment();
+            nextBatch.forEach(item => {
+                if (!item.face) return;
+                const el = document.createElement('div');
+                el.className = 'card';
+                el.innerText = item.face;
+                el.onclick = () => {
+                    navigator.clipboard.writeText(item.face);
+                    showToast();
+                };
+                fragment.appendChild(el);
+            });
+
+            grid.appendChild(fragment);
+            currentRenderedCount += nextBatch.length;
+        }
+
+        function initialRender(items) {
+            grid.innerHTML = '';
+            currentRenderedCount = 0;
+            filteredData = items;
+            renderNextChunk();
+        }
+
+        container.addEventListener('scroll', () => {
+            if (container.scrollTop + container.clientHeight >= container.scrollHeight - 200) {
+                if (currentRenderedCount < filteredData.length) {
+                    renderNextChunk();
+                }
+            }
+        });
+
+        function showToast() {
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 1000);
+        }
+
+        search.oninput = (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (!query) {
+                initialRender(database);
+                return;
+            }
+
+            const filtered = database.filter(item =>
+                item.tags.includes(query) || item.face.toLowerCase().includes(query)
+            );
+            initialRender(filtered);
+        };
+
+        // Specific parser for the nested arrays structure
+        function parseDataset(data) {
+            const list = [];
+            if (data && typeof data === 'object' && !Array.isArray(data)) {
+                for (const [kaomoji, metadata] of Object.entries(data)) {
+                    let combinedTags = [];
+
+                    if (metadata && typeof metadata === 'object') {
+                        if (Array.isArray(metadata.original_tags)) {
+                            combinedTags = combinedTags.concat(metadata.original_tags);
+                        }
+                        if (Array.isArray(metadata.new_tags)) {
+                            combinedTags = combinedTags.concat(metadata.new_tags);
+                        }
+                    }
+
+                    // Store combined tags as a pre-lowercased string for instant searching
+                    list.push({
+                        face: kaomoji,
+                        tags: combinedTags.join(' ').toLowerCase()
+                    });
+                }
+            }
+            return list;
+        }
+
+        fetch('emoticon_dict.json')
+            .then(response => {
+                if (!response.ok) throw new Error('Network response error');
+                return response.json();
+            })
+            .then(data => {
+                database = parseDataset(data);
+                initialRender(database);
+            })
+            .catch(err => {
+                console.error('Failed to load kaomoji database:', err);
+                grid.innerText = 'Error loading database.';
+            });
+    </script>
+</body>
+</html>

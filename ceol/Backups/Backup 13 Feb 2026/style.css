@@ -1,0 +1,238 @@
+:root {
+    --primary: #00341d;
+    --accent: #c0392b;
+    --bg: #f4f4f9;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
+}
+
+body { display: flex; flex-direction: column; }
+
+header {
+    background: var(--primary);
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.header-title-area { display: flex; align-items: center; gap: 10px; }
+.header-logo { height: 1.4rem; width: auto; display: block; }
+
+.share-btn {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid white;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.layout { display: flex; flex: 1; overflow: hidden; }
+
+/* Sidebar */
+#sidebar {
+    width: 280px;
+    background: white;
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+#file-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    scroll-behavior: smooth;
+}
+
+.file-item {
+    padding: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+}
+
+.file-item:hover { background: #f9f9f9; }
+.file-item.active {
+    border-left: 4px solid var(--accent);
+    background: #fff5f5;
+    font-weight: bold;
+}
+
+/* Content Area */
+#content {
+    flex-grow: 1;
+    padding: 15px; /* The "gutter" between the paper and the screen edge */
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    -webkit-overflow-scrolling: touch;
+}
+
+.nav-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    background: #eee;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.setting-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.setting-btn.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+#paper {
+    background: white;
+    padding: 15px; /* Internal padding so the notes don't hit the paper edge */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
+    box-sizing: border-box; /* This is the "hard thinky" fix—it forces padding inside the width */
+}
+
+#back-btn {
+    display: none;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 14px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+/* Mobile Rules */
+@media (max-width: 768px) {
+    #sidebar { width: 100%; height: 100%; border-right: none; }
+    body.tune-selected header, body.tune-selected #sidebar { display: none; }
+    body.tune-selected #back-btn { display: block; }
+}
+
+/* --- ABCJS MIDI Player Styles --- */
+.abcjs-inline-audio {
+    height: 50px;
+    padding: 0 10px;
+    border-radius: 4px;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Hides the CSS warning */
+.abcjs-inline-audio .abcjs-css-warning {
+    display: none;
+}
+
+/* Buttons */
+.abcjs-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    fill: #00341d; /* Your dark green */
+    width: 34px;
+    height: 34px;
+}
+
+/* The Background of the Progress Bar */
+.abcjs-midi-progress-indicator {
+    background-color: #c0392b !important;
+    height: 100%;
+    /* Remove any fixed width: 0 if it was there */
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none; /* Allows clicks to pass through to the background bar */
+    z-index: 1;
+}
+
+.abcjs-midi-progress-background {
+    background-color: #ccc !important;
+    height: 12px;
+    border-radius: 6px;
+    flex: 1;
+    margin: 0 15px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* Tempo Warp Control */
+.abcjs-midi-tempo {
+    font-size: 14px;
+    font-weight: bold;
+    color: #00341d;
+}
+
+
+#audio-controls {
+    display: block !important;
+    visibility: visible !important;
+    min-height: 60px; /* Ensures it has space on mobile */
+    margin: 10px 0;
+    clear: both;
+}
+
+/* Ensure the progress indicator is actually visible over the background */
+.abcjs-midi-progress-indicator {
+    background-color: #c0392b !important;
+    height: 100% !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+}

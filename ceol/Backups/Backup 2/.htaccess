@@ -1,0 +1,6 @@
+AddType application/json .json
+AddType text/plain .abc
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>

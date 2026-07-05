@@ -1,0 +1,208 @@
+X: 1
+T: Off To California
+Z: Jeremy
+S: https://thesession.org/tunes/30#setting30
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Gmaj
+|:GFGB AGED|GBdg e2df|gfgd edBG|ABAG E2DE|
+G2GB AGED|GBdg e2df|gfgd edBG|ABAF G4:|
+|:gfeg fedf|edef edBd|gfgd edBG|ABAG EDEF|
+GFGB AGED|GBdg e2df|gfgd edBG|ABAF G4:|
+
+X: 2
+T: Off To California
+Z: TunesFromDoolin
+S: https://thesession.org/tunes/30#setting12422
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Gmaj
+|:GFGB AGED|GFGB d2d2|egge dBBG|ABAG E2D2|
+GFGB AGED|GFGB d2d2|egge dBBG|1 A2G2 G2DE:|2 A2G2 G2Gg||
+|:gfeg fed2|edBd edBd|g3d edBG|ABAG E2D2|
+GFGB AGED|GFGB d2d2|egge dBBG|1 A2G2 G2Gg:|2 A2G2 G2DE||
+
+X: 3
+T: Off To California
+Z: dcef
+S: https://thesession.org/tunes/30#setting21503
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Gmaj
+(3DEF|:GFGB AGED|GBdg e2 (3def|gfgd edBG|ABAG E2 (3DEF|
+GFGB AGED|GBdg e2 (3def|gfgd edBG|1 (3ABA GF G2 (3DEF:|2 (3ABA GF G2 (3def||
+|:gfeg fedf|edef edBd|gfgd edBG|ABAG E2 (3DEF|
+GFGB AGED|GBdg e2 (3def|gfgd edBG|1 (3ABA GF G2 (3def:|2 (3ABA GF G4||
+
+X: 4
+T: Off To California
+Z: Bryce
+S: https://thesession.org/tunes/30#setting21791
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Gmaj
+(3DEF|:"G"GFGB "D"AGED|"G"GBdg "C"e2 (3def|"G"gfgd "Em"edBG|"Am"ABAG "D"E2 (3DEF|
+"G"GFGB "D"AGED|"G"GBdg "C"e2 (3def|"G"gfgd "Em"edBG|1 "D"(3ABA GF "G"G2 (3DEF:|2 "D"(3ABA GF "G"G2 (3def||
+|:"E"gfeg "Bm"fedf|"C"edef "Em"edBd|"G"gfgd "Em"edBG|"Am"ABAG "D"E2 (3DEF|
+"G"GFGB "D"AGED|"G"GBdg "C"e2 (3def|"G"gfgd "Em"edBG|1 "D"(3ABA GF "G"G2 (3def:|2 "D"(3ABA GF "G"G4||
+
+X: 5
+T: Off To California
+Z: Mix O'Lydian
+S: https://thesession.org/tunes/30#setting26562
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Gmaj
+|:(3DEF|G>FG>B A>GE>D|G>Bd>g e2 (3def|g>fg>d e>dB>G|A>BA>G E2 (3DEF|
+G>FG>B A>GE>D|G>Bd>g e2 (3def|g>fg>d e>dB>G|A>GE>F G2:|
+|:(3def|g>fe>g f>ed>f|e>de>f e>dB>d|g>fg>d e>dB>G|A>BA>G E2 (3DEF|
+G>FG>B A>GE>D|G>Bd>g e2 (3def|g>fg>d e>dB>G|(3ABA E>F G2:|
+
+X: 6
+T: Off To California
+Z: Smiley
+S: https://thesession.org/tunes/30#setting30333
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Gmaj
+DE|GABG AGED|GABd e2d2|edBd gedB|ABAG E2DE|
+GABG AGED|GABd e2d2|efge dBAc|B2G2G2||
+AB|dgfg edBc|dgfg e2d2|edBd gedB|ABAG E2DE|
+GABG AGED|GABd e2d2|efge dBAc|B2G2G2||
+
+X: 7
+T: Off To California
+Z: Sergei Ejov
+S: https://thesession.org/tunes/30#setting31469
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Gmaj
+|:"G"GFGB AGED|GBdg "C"e2df|gfgd edBG|"Am"ABAG "D"E2DE|
+"G"G2GB AGED|GBdg "C"e2df|gfgd edBG|"D"ABAF "G"G4:|
+|:"Em"gfeg "D"fedf|"C"edef edBd|gfgd edBG|"Am"ABAG "D"EDEF|
+"G"GFGB AGED|GBdg "C"e2df|gfgd edBG|"D"ABAF "G"G4:|
+
+X: 8
+T: Off To California
+Z: Proinnsias MacSleimhne
+S: https://thesession.org/tunes/30#setting37213
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Gmaj
+|:D2|G>FG>B A>GE>F|G>FG>B e2dd|e>dB>d c>AE>F|G>BA>G E2D2|
+G>FG>B A>GE>F|G>FG>B e2dd|e>dB>d c>AE>F|G2B2 G2:|
+|:d2|e>^de>f g>fg>B|G>BA>G E2D2|G>FG>B e>dB>G|A>^GA>B A2d2|
+e>^de>f g>fg>B|G>BA>G E2D2|G>FG>B e>dB>G|A2F2 G2:|
+
+X: 9
+T: Off To California
+Z: BarbaryAnne
+S: https://thesession.org/tunes/30#setting37959
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Gmaj
+|:(3DEF|G>FG>B A>GE>D|G>Bd>g e2 (3def|g>fg>d e>dB>G|A>BA>G E2 (3DEF|
+G>FG>B A>GE>D|G>Bd>g e2 (3def|g>fg>d e>dB>G|(3ABA G>F G2:|
+|:(3def|g>fe>g f>ed>f|e>de>f e>dB>d|g>fg>d e>dB>G|A>BA>G E2 (3DEF|
+G>FG>B A>GE>D|G>Bd>g e2 (3def|g>fg>d e>dB>G|(3ABA E>F G2:|
+
+X: 10
+T: Off To California
+Z: Alba03
+S: https://thesession.org/tunes/30#setting45168
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Gmaj
+(3DEF|:"G"GFGB "D"AGED|"G"GBdg "C"e2 (3def|"G"gfgd "Em"edBG|"Am"ABAG "D"E2 (3DEF|
+"G"GFGB "D"AGED|"G"GBdg "C"e2 (3def|"G"gfgd "Em"edBG|1 "D" AB EF "G"G2 (3DEF:|2 "D"AB EF "G"G2 (3def||
+|:"E"gfeg "Bm"fedf|"C"edef "Em"edBd|"G"gfgd "Em"edBG|"Am"ABAG "D"E2 (3DEF|
+"G"GFGB "D"AGED|"G"GBdg "C"e2 (3def|"G"gfgd "Em"edBG|1 "D"AB EF "G"G2 (3def:|2 "D"AB EF "G"G4||
+
+X: 11
+T: Off To California
+Z: lusoceltibero
+S: https://thesession.org/tunes/30#setting45417
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Gmaj
+(3DEF|:"G"GFGB AGED|GBdg "C"e2 (3def|"G"gfgd edBG|"Am"ABAG "D"E2 (3DEF|
+"G"GFGB AGED|GBdg "C"e2 (3def|"G"gfgd edBG|1 "D"(3ABA GF "G"G2 (3DEF:|2 "D"(3ABA GF "G"G2 (3def||
+|:"G"gfeg "D"fedf|"C"edef edBd|"C"gfgd "Em"edBG|"D"ABAG E2 (3DEF|
+"G"GFGB AGED|"G"GBdg "C"e2 (3def|"G"gfgd edBG|1 "D"(3ABA GF "G"G2 (3def:|2 "D"(3ABA GF "G"G4||
+
+X: 12
+T: Off To California
+Z: Fernando Durbán Galnares
+S: https://thesession.org/tunes/30#setting45418
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Gmaj
+|:DF|"G"GFGB "D"AGED|"G"GBdg "C"e2 df|"G"gfgd "Em"edBG|"Am"ABAG "D"E2 DF|
+"G"GFGB "D"AGED|"G"GBdg "C"e2 df|"G"gfgd "Em"edBG|"D"AGEF "G"G2:|
+|:df|"Em"gfeg "Bm"fedf|"C"edef "Em"edBd|"G"gfgd "Em"edBG|"Am"ABAG "D"E2 DF|
+"G"GFGB "D"AGED|"G"GBdg "C"e2 df|"G"gfgd "Em"edBG|"D"AGEF "G"G2:|
+
+X: 13
+T: Off To California
+Z: John E Roche
+S: https://thesession.org/tunes/30#setting46963
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Amaj
+|:E2|A>Bc>A|B>AF>E|A>ce>a f2 f>g|a>ga>b a>fe>d|B>cB>A F2 E2|
+A>Bc>A B>AF>E|A>ce>a f2 f>g|a>ga>f e>fe>c|B>dc>B A2:|
+|:c>d|e>ag>a b>gf>e|f>ag>b a3 e|f>ga>e f>ec>A|B>cB>A F2 E2|
+A>Bc>A B>AF>E|A>ce>a f2 f>g|a>ga>f e>fe>c|B>dc>B A2:|
+
+X: 14
+T: Off To California
+Z: Gabby McKinley
+S: https://thesession.org/tunes/30#setting49797
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Gmaj
+|:(3DEF|"G" G>FG>B"C" A>GE>D|"G" G>Bd>g "C" e2 (3def|"G" g>fg>d"Em" e>dB>G|"Am" A>BA>G "D" E2 (3DEF|
+"G" G>FG>B"C" A>GE>D|"G" G>Bd>g"C" e2 (3def|"G" g>fg>d"Em" e>dB>G|"C" A>GE>F "G" G2:|
+|:d>f|"Em" g>fe>g"D" f>ed>f|"Em" e>de>f"D" e>dB>d|"G" g>fg>d "Em"e>dB>G|"Am" A>BA>G"D" E2 (3DEF|
+"G" G>FG>B"C" A>GE>D|"G" G>Bd>g"C" e2 (3def|"G" g>fg>d"Em" e>dB>G|"Am" A>G"D" E>F "G" G2:|
+
+X: 15
+T: Off To California
+Z: Féilim Borland
+S: https://thesession.org/tunes/30#setting53665
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Amaj
+|: (3ABc Bc AFEA|Acea (3fff fg|agae fecA|(3BBB BA (3FFF F2 |
+(3ABc Bc AFEA|Acea (3fff fg|agae fecA| BAGB AEAA :|
+|:agfa gefe | (3fff fe fece | agae fecA | (3BBB BA (3FFF F2 |
+(3ABc Bc AFEA|Acea (3fff fg|agae fecA| BAGB AE A2 :|
+
+X: 16
+T: Off To California
+Z: brailsford
+S: https://thesession.org/tunes/30#setting55761
+R: hornpipe
+M: 4/4
+L: 1/8
+K: Amaj
+|: A2cA BAFE|ABce f2 e2|afaf efec|AcBA FDEF|
+A2cA BAFE|ABce f2 e2|afaf ecAc|1 B2 A2 A2 (3EFG:|2 B2 A2 A2 A2||
+|:e2ae fece|feae f2 e2|ea2f efec|AcBA FDEF|
+A3c BAFE|ABce f2 e2|afaf ecAc |B2 A2 A4:|
+

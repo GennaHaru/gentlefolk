@@ -1,0 +1,380 @@
+:root {
+    --primary: #00341d;
+    --accent: #c0392b;
+    --bg: #f4f4f9;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+    height: 100%; margin: 0; padding: 0;
+    background: var(--bg); font-family: sans-serif; overflow: hidden;
+}
+
+body { display: flex; flex-direction: column; }
+
+header {
+    background: var(--primary); color: white;
+    padding: 0.8rem 1rem; flex-shrink: 0;
+}
+
+.header-content {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+
+.header-title-area { display: flex; align-items: center; gap: 10px; }
+.header-logo { height: 30px; width: auto; }
+.header-text { margin: 0; font-size: 1.1rem; }
+
+.header-btns { display: flex; gap: 5px; width: 100%; justify-content: center; }
+
+.head-btn {
+    padding: 6px 10px; background: rgba(255, 255, 255, 0.15);
+    color: white; border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.layout { display: flex; flex: 1; overflow: hidden; }
+
+#sidebar {
+    width: 280px; background: white; border-right: 1px solid #ddd;
+    display: flex; flex-direction: column; flex-shrink: 0;
+}
+
+#file-list { flex-grow: 1; overflow-y: auto; padding: 10px; }
+.file-item { padding: 12px; cursor: pointer; border-bottom: 1px solid #eee; }
+.file-item.active { border-left: 4px solid var(--accent); background: #fff5f5; font-weight: bold; }
+
+#content { flex-grow: 1; padding: 15px; overflow-y: auto; background: var(--bg); }
+
+.tune-header-actions { display: none; margin-bottom: 15px; }
+#back-btn {
+    width: 100%; padding: 14px; background: var(--primary);
+    color: white; border: none; border-radius: 4px; font-weight: bold;
+}
+
+#paper {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
+    /* ADD THESE TWO LINES */
+    display: block;
+    overflow: hidden;
+}
+
+/* ADD THIS NEW BLOCK BELOW IT */
+#paper svg {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    /* This forces the SVG to ignore its internal fixed width */
+    preserveAspectRatio: none !important;
+}
+
+#paper svg g {
+    display: flex;
+    justify-content: space-between;
+}
+/* Modal System */
+.modal-overlay {
+    display: none !important; position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); z-index: 9999;
+    align-items: center; justify-content: center;
+    pointer-events: none;
+}
+
+.modal-overlay[style*="display: flex"] { pointer-events: auto !important; }
+
+.modal-card {
+    background: white; padding: 30px 20px 20px 20px;
+    border-radius: 12px; position: relative; width: 90%; max-width: 400px;
+}
+
+.close-modal-x {
+    position: absolute; top: 8px; right: 8px;
+    background: #eee; border: none; border-radius: 50%;
+    width: 30px; height: 30px; cursor: pointer; font-weight: bold;
+}
+
+.social-links { list-style: none; padding: 0; margin: 10px 0; }
+.social-links li { margin-bottom: 10px; }
+.social-links a { color: var(--primary); font-weight: bold; text-decoration: none; }
+
+@media (max-width: 768px) {
+    #sidebar { width: 100%; }
+    body.tune-selected #sidebar, body.tune-selected header { display: none; }
+    body.tune-selected .tune-header-actions { display: block; }
+}
+
+ /* --- THE STACKING KILLER --- */
+
+
+/* 1. Hide the junk (Timer, Progress, Warnings) */
+
+#midi-player .abcjs-midi-selection,
+
+/*#midi-player .abcjs-tempo-wrapper,*/
+
+#midi-player .abcjs-loading-svg,
+
+#midi-player .abcjs-progress-background,
+
+#midi-player .abcjs-progress-wrapper,
+
+.abcjs-css-warning {
+
+    display: none !important;
+
+    height: 0 !important;
+
+    width: 0 !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+}
+
+
+/* Restore and style the timer */
+
+
+
+
+/* 2. Force the Horizontal Row */
+
+#midi-player .abcjs-audio-root {
+
+    display: inline-flex !important;
+
+    flex-direction: row !important;
+
+    flex-wrap: nowrap !important; /* Prevents them from jumping to the next line */
+
+    align-items: center !important;
+
+    justify-content: flex-start !important;
+
+    gap: 15px !important;
+
+    background: transparent !important;
+
+    border: none !important;
+
+    width: 100% !important;
+
+    flex-shrink: 0 !important;
+
+}
+
+/* ADD THESE LINES */
+#midi-player .abcjs-audio-root > div {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    flex-shrink: 0 !important; /* Forces the browser to respect your widths */
+}
+
+#midi-player .abcjs-tempo-wrapper {
+    display: flex !important;
+    white-space: nowrap !important; /* Keeps 100% on one line */
+}
+
+/* 3. The "Melting" Rule: Makes inner divs invisible to the layout */
+/*
+#midi-player .abcjs-audio-root div,
+
+#midi-player .abcjs-audio-root span {
+
+    display: contents !important;
+
+}
+*/
+
+/* 4. The Button Styling */
+
+#midi-player .abcjs-btn {
+
+    display: inline-flex !important; /* Force them to be inline */
+
+    width: 55px !important;
+
+    height: 55px !important;
+
+    background: white !important;
+
+    border: 2px solid var(--primary) !important;
+
+    border-radius: 8px !important;
+
+    cursor: pointer !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+
+    padding: 5px !important;
+
+    flex-shrink: 0 !important; /* Prevents the button from being squashed */
+
+    gap: 4px !important;
+
+}
+
+
+/* 5. Icon Visibility */
+
+#midi-player .abcjs-btn svg {
+
+    width: 30px !important; /* Fixed size is safer than 100% sometimes */
+
+    height: 30px !important;
+
+    fill: var(--primary) !important;
+
+    display: block !important;
+
+}
+
+
+/* FORCE PLAY AND PAUSE ICONS TO SHOW SIDE-BY-SIDE */
+
+/* 1. Scale icons up to match the 'Back' button icon size */
+#midi-player .abcjs-btn .abcjs-pause-svg,
+#midi-player .abcjs-btn .abcjs-play-svg {
+    display: inline-block !important;
+    width: 32px !important;  /* Base width for the icon container */
+    height: 32px !important;
+    transform: scale(1.2) !important; /* This manually grows the icon itself */
+    transform-origin: center !important;
+    margin: 0 !important;
+    position: relative !important;
+    left: 10px !important;
+}
+
+/* 2. Narrower button for a cleaner look */
+#midi-player .abcjs-btn {
+    width: 75px !important;
+    height: 55px !important;
+    display: inline-flex !important;
+    align-items: center !important;    /* Centers vertically */
+    justify-content: center !important; /* Centers horizontally */
+    padding: 0 !important;             /* Removes internal space that pushes icons left */
+    gap: 4px !important;
+}
+
+/* 3. Keep the Back button square and proportional */
+#midi-player .abcjs-audio-root div:first-child .abcjs-btn {
+    width: 55px !important;
+    height: 55px !important;
+}
+
+/* 4. Ensure the Play icon doesn't show up on the Back button */
+#midi-player .abcjs-audio-root div:first-child .abcjs-btn .abcjs-play-svg {
+    display: none !important;
+}
+
+
+/* --- 5. Version Navigation (REPAIRED) --- */
+
+#setting-nav {
+
+    display: flex !important;
+
+    flex-wrap: wrap !important;
+
+    gap: 8px !important;
+
+    margin-top: 20px !important; /* Create clear separation from the player */
+
+    padding: 10px 0 !important;
+
+    clear: both !important;
+
+}
+
+
+#setting-nav button {
+
+    /* Resetting from the player button styles */
+
+    display: inline-block !important;
+
+    width: auto !important;
+
+    height: auto !important;
+
+    min-width: 35px !important;
+
+    padding: 8px 12px !important;
+
+
+    /* Styling */
+
+    border: 1px solid var(--primary) !important;
+
+    background: white !important;
+
+    color: var(--primary) !important;
+
+    border-radius: 6px !important;
+
+    font-weight: bold !important;
+
+    cursor: pointer !important;
+
+    font-size: 0.9rem !important;
+
+}
+
+
+#setting-nav button.active {
+
+    background: var(--primary) !important;
+
+    color: white !important;
+
+}
+
+
+#midi-player .abcjs-midi-current-time {
+    display: flex !important;      /* Forces it to exist again */
+    visibility: visible !important;
+    height: 55px !important;
+    align-items: center !important;
+    font-size: 32px !important;    /* Using pixels for brute force */
+    font-weight: bold !important;
+    color: var(--primary) !important;
+    margin-left: 5px !important;
+    min-width: 50px !important;    /* Prevents it from being crushed */
+}
+
+#midi-player .abcjs-tempo-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-left: 0px !important;
+    font-size: 18px !important; /* Size of the "Speed" text */
+    color: var(--primary) !important;
+}
+
+/* Defines the size of the number inside the box */
+/* Target the actual number box */
+#midi-player .abcjs-tempo-wrapper input {
+    display: inline-block !important; /* Overrides the 'contents' melt */
+    visibility: visible !important;
+    width: 80px !important;           /* Gives the number room to exist */
+    height: 40px !important;          /* Makes it tall enough to see */
+    font-size: 24px !important;       /* Increases the BPM number size */
+    font-weight: bold !important;
+    color: var(--primary) !important;
+    background: white !important;
+    border: 2px solid var(--primary) !important;
+    border-radius: 4px !important;
+    text-align: center !important;
+}
+

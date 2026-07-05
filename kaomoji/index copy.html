@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaomoji Database</title>
+    <style>
+        :root {
+            --bg: #1a1821;           /* Soft dark purplish grey */
+            --text: #e5e1eb;         /* White-ish text with soft tint */
+            --surface: #25222e;      /* Slightly lighter purplish grey */
+            --border: #383345;       /* Muted purple-grey border */
+            --accent: #9d8ec4;       /* Soft lavender accent for toast/active states */
+            --search-focus: #635875; /* Soft mid-tone purple-grey for focus */
+        }
+        body {
+            font-family: monospace, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 12px;
+        }
+        #search {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text);
+            border-radius: 10px;
+            margin-bottom: 16px;
+            position: sticky;
+            top: 12px;
+            outline: none;
+        }
+        #search:focus {
+            border-color: var(--search-focus);
+        }
+        #grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 15px;
+            user-select: none;
+            transition: background 0.1s, border-color 0.1s;
+            white-space: nowrap;
+        }
+        .card:active {
+            background: var(--border);
+            border-color: var(--accent);
+        }
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--bg);
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-weight: bold;
+            display: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <input type="text" id="search" placeholder="Search kaomoji..." autocomplete="off">
+    <div id="grid"></div>
+    <div id="toast">Copied!</div>
+
+    <script>
+        const database = [
+            // --- JOY & EXCITEMENT ---
+            { face: "(* ^ ω ^)", tags: "happy smile joy cute blush pleasant" },
+            { face: "(´ ∀ ` *)", tags: "happy grin teeth laugh broad smile" },
+            { face: "(o^▽^o)", tags: "happy smile laugh wide open" },
+            { face: "(⌒▽⌒)☆", tags: "happy smile star lucky cheer" },
+            { face: "╰(*´︶`*)╯", tags: "happy hug embrace celebrate warmth" },
+            { face: "☆*:.｡. o(≧▽≦)o .｡.:*☆", tags: "excited sparkle joy hyper win" },
+            { face: "(≧◡≦)", tags: "happy closed eyes cute grin" },
+            { face: "(o´∀`o)", tags: "happy giggle cute friendly" },
+            { face: "(´｡• ω •｡`)", tags: "happy soft cute innocent smile" },
+            { face: "ヽ(*・ω・)ﾉ", tags: "happy run skip jump casual" },
+            { face: "(*´▽`*)", tags: "happy relieved sweet gentle" },
+            { face: "｡ﾟ( ﾟ^∀^ﾟ)ﾟ｡", tags: "laughing crying hard hilarious lol laugh" },
+            { face: "(ﾉ◕ヮ◕)ﾉ*:・ﾟ✧", tags: "magic happy throwing sparkles stars joy" },
+            { face: "✧(｡•̀ᴗ-)✧", tags: "wink confident spark star cool" },
+            { face: "⸜(*ˊᗜˋ*)⸝", tags: "joy cheers hands up celebrate open" },
+            { face: "ヽ(ˇ∀ˇ)ノ", tags: "dance move groove rhythm celebrate" },
+            { face: "＼(￣▽￣)／", tags: "hooray hands up win victory cheer" },
+            { face: "ᐠ( ᐛ )ᐟ", tags: "derp happy running hands chaos" },
+            { face: "(＾▽＾)", tags: "happy smile basic simple" },
+            { face: "(ﾟ▽ﾟ)/", tags: "happy wave hello greet" },
+            { face: "(*≧ω≦*)", tags: "happy super excited squeal" },
+            { face: "(〃＾▽＾〃)", tags: "happy blush pure innocent" },
+            { face: "(((o(*ﾟ▽ﾟ*)o)))", tags: "happy trembling excite vibrating" },
+            { face: "(★^O^★)", tags: "happy star eyes open mouth shout" },
+            { face: "(☆▽☆)", tags: "happy starry eyes awe amazing" },
+            { face: "(b ᵔ▽ᵔ)b", tags: "happy thumbs up approve good" },
+            { face: "(๑˃ᴗ˂)ﻭ", tags: "happy fist pump success win" },
+            { face: "(ﾉ´ヮ`)ﾉ*: ･ﾟ", tags: "happy magic toss throw dust" },
+            
+            // --- LOVE & ADORE ---
+            { face: "(♡°▽°♡)", tags: "love heart eyes romantic sweet adore" },
+            { face: "(ღ˘⌣˘ღ)", tags: "love peaceful heart calm kiss content" },
+            { face: "(✿ ♡ ‿ ♡)", tags: "love heart eyes adore beautiful sweet" },
+            { face: "ヽ(♡‿♡)ノ", tags: "love arms open happy adore hearts" },
+            { face: "(*♡∀♡)", tags: "love infatuation starry eyes obsessed" },
+            { face: "(｡・//ε//・｡)", tags: "blush shy love kiss romantic embarrassed" },
+            { face: "( ´ ▽ ` ).｡ｏ♡", tags: "dreaming love thinking heart xoxo" },
+            { face: "(っ˘з(˘⌣˘ ) ♡", tags: "kiss love couple cheek romantic sweet" },
+            { face: "٩(♡ε♡)۶", tags: "love intense excited hearts eyes mad" },
+            { face: "Σ>―(〃°ω°〃)♡→", tags: "arrow heart shot love hit crush struck" },
+            { face: "(♡-_-♡)", tags: "love shy calm flat content" },
+            { face: "(─‿‿─)♡", tags: "love smug content satisfied" },
+            { face: "(´｡• ᵕ •｡`) ♡", tags: "love soft cute pure gentle" },
+            { face: "(*˘︶˘*).｡.:*♡", tags: "love peaceful sleep dream aesthetic" },
+            { face: "(≧◡≦) ♡", tags: "love happy grin cute" },
+            { face: "♡( ◡‿◡ )", tags: "love inner peace gentle" },
+            { face: "(♡μ_μ)", tags: "love bashful hide kiss" },
+            { face: "(ﾉ´ з `)ノ", tags: "love blowing kiss toss affection" },
+            { face: "(♡˙︶˙♡)", tags: "love pure innocent sweet" },
+            { face: "♡＼(￣▽￣)／♡", tags: "love welcome hug open" },
+            
+            // --- ANGER & RAGE ---
+            { face: "(╯°□°）╯︵ ┻━┻", tags: "table flip angry rage mad destroy slam" },
+            { face: "┬─┬ノ( º _ ºノ)", tags: "table unflip put back calm down respect" },
+            { face: "(＃`Д´)", tags: "angry shouting mad teeth veins furious" },
+            { face: "(`皿´＃)", tags: "angry grit teeth pissed mad rage" },
+            { face: "(╬`益´)", tags: "furious angry grimace veins hate dark" },
+            { face: "凸(`△´＃)", tags: "middle finger bird flip off angry mad" },
+            { face: "ヽ(`﹏´)ノ", tags: "angry tantrums combat fight stance" },
+            { face: "((╬◣﹏◢))", tags: "extreme rage violent dark angry yelling" },
+            { face: "(凸ಠ益ಠ)凸", tags: "double middle finger double bird rage" },
+            { face: "＼＼٩(๑`^´๑)۶／／", tags: "angry power up rage fight determined" },
+            { face: "(╬ Ò﹏Ó)", tags: "furious angry veins mad confront" },
+            { face: "(ﾒ` ﾛ ´)", tags: "angry combat aggressive" },
+            { face: "(╯ರ ~ ರ)╯︵ ┻━┻", tags: "angry table flip rage monocle" },
+            { face: "(ノಠ益ಠ)ノ彡┻━┻", tags: "angry table flip violent throw" },
+            { face: "(┛◉Д◉)┛彡┻━┻", tags: "angry table flip wide eyes crazy" },
+            { face: "(ﾉಥ益ಥ)ﾉ", tags: "angry cry flip tears rage" },
+            { face: "(҂` ﾛ ´)凸", tags: "angry combat shoot bird middle finger" },
+            { face: "(ꐦ ಠ皿ಠ)", tags: "angry veins teeth clench stare" },
+            
+            // --- SADNESS & CRY ---
+            { face: "（；_；）", tags: "cry sad tears weeping depressed streams" },
+            { face: "(ノ_<。)", tags: "sad wiping tears crying downcast lonely" },
+            { face: "(-_-)", tags: "sad down deadpan emotionless done flatline" },
+            { face: "(´-ω-`)", tags: "sad downcast sigh disappointed regret" },
+            { face: "。゜゜(´Ｏ`) ゜゜。", tags: "wailing crying hard tears fountain" },
+            { face: "(个_个)", tags: "tears vertical lines sad crying streaming" },
+            { face: "(╥_╥)", tags: "crying streams heavy eyes closed broken" },
+            { face: "(ಥ﹏ಥ)", tags: "holding tears watery eyes sad panic" },
+            { face: "｡ﾟ(｡ﾉωヽ｡)ﾟ｡", tags: "crying hiding face embarrassed sad tears" },
+            { face: "o(〒﹏〒)o", tags: "crying shaking hands up desperate sad" },
+            { face: "/(ㄒoㄒ)/~~", tags: "run cry stream heavy sad escape" },
+            { face: "( ╥ω╥ )", tags: "cry sad pathetic small tears" },
+            { face: "(っ- ‸ - ς)", tags: "sad pout hold face soft cry" },
+            { face: "(｡T ω T｡)", tags: "cry sad puppy innocent" },
+            { face: "(>_<)", tags: "pain grimace tight eyes hurt" },
+            { face: "( ; ω ; )", tags: "cry sniffle holding back tears" },
+            { face: "(T_T)", tags: "cry classic tears sad flat" },
+            { face: "(Ｔ▽Ｔ)", tags: "cry laughing tears joy pain" },
+            { face: "(ಥ_ಥ)", tags: "cry stream single tear sad" },
+            { face: "(；∀；)", tags: "cry forced smile sad laugh" },
+            { face: "(╯︵╰,)", tags: "sad disappointed sigh down" },
+            
+            // --- INDIFFERENCE & LOOKS ---
+            { face: "¯\\_(ツ)_/¯", tags: "shrug whatever meh default dont know" },
+            { face: "ヽ(ー_ー )ノ", tags: "shrug simple whatever careless sigh" },
+            { face: "┐(￣ヘ￣)┌", tags: "shrug look away smug unbothered arrogant" },
+            { face: "╮(￣_￣)╭", tags: "shrug careless sigh hands up empty" },
+            { face: "(￢_￢)", tags: "side eye squint suspect doubt suspicious stare" },
+            { face: "눈_눈", tags: "unamused flat look glare deadpan done tired" },
+            { face: "ಠ_ಠ", tags: "stare look disapproval look glare serious" },
+            { face: "☉_☉", tags: "blank wide eyes stare deadpan shock" },
+            { face: "（＿´Д｀）", tags: "sigh groan tired exhausted" },
+            { face: "(￣ω￣;)", tags: "sigh yawn lazy tired sleep drain" },
+            { face: "(￣-￣)", tags: "flat deadpan straight face" },
+            { face: "(ー_ーゞ", tags: "salute lazy whatever sigh" },
+            { face: "(　￣д￣)", tags: "ugh disgust gross tired" },
+            { face: "(≖_≖ )", tags: "squint doubt judge stare" },
+            { face: "( ಠ ಠ )", tags: "stare direct eye contact intense" },
+            { face: "( •_• )", tags: "blank neutral basic stare" },
+            { face: "( ͠° ͟ʖ ͡°)", tags: "lenny confused brow raise suspect" },
+            
+            // --- FEAR & SURPRISE ---
+            { face: "Σ(°△°|||)", tags: "shocked surprise gasp horror spooked" },
+            { face: "㣀( ºΔº )㣀", tags: "shock frozen horror pale dropped jaw" },
+            { face: "＼(º □ º l|l)/", tags: "scared panicking running hands up help" },
+            { face: "(((＞＜)))", tags: "shaking trembling scared cold fear" },
+            { face: "(/ω＼)", tags: "peeking hiding eyes scared shy bashful" },
+            { face: "(°□°;)", tags: "surprised open mouth shock realization" },
+            { face: "(((( 槽 )))", tags: "shaking tremble fear cold horror vibrating" },
+            { face: "(〇_ｏ)", tags: "shock wide eye confused" },
+            { face: "(ﾟДﾟ;)", tags: "shock gasp yell open mouth" },
+            { face: "(°ロ°) !", tags: "shock realization exclamation" },
+            { face: "(⊙_⊙)", tags: "stare blink shock blank" },
+            { face: "(O_O;)", tags: "shock sweat stare wide" },
+            { face: "(>0<；)", tags: "yell scream scared panic" },
+            
+            // --- ANIMALS ---
+            { face: "(=^･ω･^=)", tags: "cat kitty animal whiskers meow paw" },
+            { face: "(=^ ◡ ^=)", tags: "cat smile gentle kitten friendly animal" },
+            { face: "▼・ᴥ・▼", tags: "dog puppy snout bark animal ears" },
+            { face: "（・⊝・）", tags: "bird chick beak wing animal small" },
+            { face: "U^ｪ^U", tags: "dog happy puppy animal ears up" },
+            { face: "ᶘ ᵒᴥᵒᶅ", tags: "seal baby animal cute nose polar" },
+            { face: "(=①ω①=)", tags: "cat sneaky sharp look animal night" },
+            { face: "(=^･ｪ･^=)", tags: "cat serious stare feline" },
+            { face: "(=^-ω-^=)", tags: "cat sleeping lazy tired" },
+            { face: "(・(ｪ)・)", tags: "bear snout brown animal" },
+            { face: "(*￣(ｴ)￣*)", tags: "bear cute sleepy blush" },
+            { face: "(／￣(ｴ)￣)／", tags: "bear attack raise paws" },
+            { face: "(・Θ・)", tags: "bird flat beak chicken" },
+            { face: "(V●ᴥ●V)", tags: "dog ears snout happy" },
+            { face: "∪･ω･∪", tags: "dog ears down cute" },
+            { face: "ʕ •ᴥ• ʔ", tags: "bear koala cute small" },
+            { face: "ʕ •̀ o •́ ʔ", tags: "bear angry shout cute" },
+            { face: "ʕ ᵔᴥᵔ ʔ", tags: "bear happy smile cute" },
+            
+            // --- CORE LENNY & MEMES ---
+            { face: "( ͡° ͜ʖ ͡°)", tags: "lenny face smug leny look creep pervert" },
+            { face: "(▀̿Ĺ̯▀̿ ̿)", tags: "cool sunglasses glasses security deal with it" },
+            { face: "ᕙ(⇀‸↼‶)ᕗ", tags: "flex muscle strong power lifting workout" },
+            { face: "(￣^￣)ゞ", tags: "salute army respect sir yes okay tactical" },
+            { face: "ᕕ( ᐛ )ᕗ", tags: "happy running text guy march stroll wander" },
+            { face: "(っ˘ڡ˘ς)", tags: "delicious food eat yummy taste lick" },
+            { face: "拝(っ˘̩╭╮˘̩)っ", tags: "beg pray please apology sorry regret" },
+            { face: "└[∵┌]└[ ∵ ]┘[┐∵]┘", tags: "robot dance android electronic machine" },
+            { face: "( ͡~ ͜ʖ ͡°)", tags: "lenny wink smug flirt" },
+            { face: "( ͡o ͜ʖ ͡o)", tags: "lenny wide eyes crazy stare" },
+            { face: "( ͡° ͜ʖ ͡°)>⌐■-■", tags: "lenny glasses off cool reveal" },
+            { face: "(ง ͠° ͟ل͜ ͡°)ง", tags: "lenny fight fists combat ready" },
+            { face: "( ͡ᵔ ͜ʖ ͡ᵔ )", tags: "lenny happy pure smile" },
+            { face: "[̲̅$̲̅(̲̅5̲̅)̲̅$̲̅]", tags: "money dollar bill rich cash" },
+
+            // --- SHY, BLUSH & AWKWARD ---
+            { face: "(,,_ _)", tags: "shy bow bashful look down embarrassed" },
+            { face: "(ง ﹌ ╬)ง", tags: "fist pump angry awkward frustrated hide" },
+            { face: "(⊙_⊙;)", tags: "sweat blank shock awkward nervous" },
+            { face: "(｡•́︿•̀｡)", tags: "sad pout hurt shy disappointed soft" },
+            { face: "(*/ω＼*)", tags: "blush cover eyes shy cute embarrassed" },
+            { face: "(•ิ_•ิ)?", tags: "confused eyebrow raise question doubt curious" },
+            { face: "(-_-;)・・・", tags: "sweat awkward nervous sigh silent" },
+            { face: "(・_・;)", tags: "sweat nervous awkward concern drop" },
+            { face: "(⁄ ⁄>⁄ ▽ ⁄<⁄ ⁄)", tags: "blush shy scream red face hide" },
+            { face: "(⁄ ⁄•⁄ω⁄•⁄ ⁄)", tags: "blush shy deep red cute" },
+            { face: "(〃´∀｀)", tags: "blush laugh nervous awkward" },
+            { face: "(〃＞＿＜;〃)", tags: "blush tight squeeze embarrassed" },
+
+            // --- GREETING & FAREWELL ---
+            { face: "(￣▽￣)/", tags: "wave hello goodbye hi bye casual greet" },
+            { face: "(*￣▽￣)b", tags: "thumbs up good job nice approved ok success" },
+            { face: "(o_ _)o", tags: "bow apology respect flat down crawl sorry" },
+            { face: "＼(￣▽￣)", tags: "wave high five reach out side greetings" },
+            { face: "( ^^)/", tags: "wave cheerful simple hi bye hello" },
+            { face: "(￣ω￣)/", tags: "bye bye wave farewell simple" },
+            { face: "( ´ ▽ ` )ﾉ", tags: "wave happy hello goodbye" },
+            { face: "(^０^)ノ", tags: "wave shout hi hello" },
+            { face: "(・_・)ノ", tags: "wave flat deadpan hi bye" },
+            { face: "(o´ω`o)ﾉ", tags: "wave soft cute hi hello" },
+            { face: "(≧▽≦)/", tags: "wave jump excited hi hello" },
+
+            // --- SLEEPY, LAZY & BORED ---
+            { face: "(￣o￣) zzZZ", tags: "sleep snoring tired lazy bored nap" },
+            { face: "(－_－) zzZ", tags: "sleep fast tired resting closed eyes resting" },
+            { face: "(＿ ＿*) zZ", tags: "face down passed out exhausted sleep dead" },
+            { face: "(￣ρ￣)..zzZZ", tags: "drool sleeping deep heavy tired sleep" },
+            { face: "(=￣ω￣=)", tags: "lazy cat smug content chill satisfied" },
+            { face: "(￣ `ー￣)", tags: "smirk lazy whatever content" },
+            { face: "( ´△｀)", tags: "yawn tired exhaust long day" },
+
+            // --- CHAOS, DERP & WEIRD ---
+            { face: "╰( ͡° ͜ʖ ͡° )つ──☆*:・ﾟ", tags: "wizard lenny magic casting wand sparkles" },
+            { face: "( ͡° ▄ ┬─┬)", tags: "lenny flip sniper tactical gun fight cover" },
+            { face: "ヽ(。_°)ノ", tags: "derp crazy upside down brain melt dizzy" },
+            { face: "ﾍ(￣▽￣*ﾍ)", tags: "sneak crawl creep ghost approach weird" },
+            { face: "⊂(◉‿◉)つ", tags: "wide eyes hug creepy open arms threat" },
+            { face: "(⊃｡•́‿•̀｡)⊃", tags: "hug soft reach out hold" },
+            { face: "(っಠ‿ಠ)っ", tags: "hug creepy stare reach" },
+            { face: "(ﾉ>ω<)ﾉ :｡･:*:･ﾟ’★,｡･:*:･ﾟ’☆", tags: "magic throw star sparkle dust cast" },
+            { face: "(∩` ﾛ ´)⊃━炎炎炎炎炎", tags: "magic fire cast spell burn flame" },
+            { face: "(ﾒ￣▽￣)︻┳═一", tags: "gun sniper tactical shoot weapon" },
+            { face: "( ｀ー´)ノ", tags: "smack hit whatever toss" },
+
+            // --- MUSIC & DANCE ---
+            { face: "(￣▽￣)ノ♪", tags: "music sing dance note casual" },
+            { face: "(^_^♪)", tags: "music happy listen note" },
+            { face: "(~‾▽‾)~", tags: "dance groove wave move arms" },
+            { face: "ヾ(⌐■_■)ノ♪", tags: "dance glasses cool music dj" },
+            { face: "(〜￣▽￣)〜", tags: "dance sway move groove smooth" },
+            { face: "ヽ(o´∀`)ﾉ♪♬", tags: "dance music sing loud happy note" }
+        ];
+
+        const grid = document.getElementById('grid');
+        const search = document.getElementById('search');
+        const toast = document.getElementById('toast');
+
+        function render(items) {
+            grid.innerHTML = '';
+            items.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'card';
+                el.innerText = item.face;
+                el.onclick = () => {
+                    navigator.clipboard.writeText(item.face);
+                    showToast();
+                };
+                grid.appendChild(el);
+            });
+        }
+
+        function showToast() {
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 1000);
+        }
+
+        search.oninput = (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = database.filter(item => item.tags.includes(query) || item.face.includes(query));
+            render(filtered);
+        };
+
+        render(database);
+    </script>
+</body>
+</html>

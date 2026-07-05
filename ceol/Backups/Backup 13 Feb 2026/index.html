@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Brisbane Ceol Tune Book</title>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="apple-touch-icon" href="logo.png">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/abcjs/6.2.2/abcjs-basic-min.js"></script>
+</head>
+<body>
+
+<header>
+    <div class="header-title-area">
+        <img src="logo.png" alt="" class="header-logo">
+        <h2 style="margin:0; font-size: 1.2rem;">Brisbane Ceol Tune Book</h2>
+    </div>
+    <button class="share-btn" onclick="toggleModal(true)">Share Page</button>
+</header>
+
+<div id="share-modal" class="modal" onclick="toggleModal(false)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <img src="qr.png" style="width:200px; height:200px;" alt="QR Code">
+        <p>https://gentlefolk.quest/ceol/</p>
+        <p><a href="https://www.facebook.com/groups/1527011278267149">Facebook Group</a></p>
+        <button onclick="toggleModal(false)">Close</button>
+    </div>
+</div>
+
+<div class="layout">
+    <div id="sidebar">
+    <div class="sidebar-header" style="padding: 10px; border-bottom: 1px solid #eee; background: #fff;">
+        <button class="update-btn" onclick="forceReset()" style="width: 100%; padding: 12px; background: var(--primary); border: none; border-radius: 6px; color: white; font-size: 0.8rem; cursor: pointer; font-weight: bold;">
+            🔄 REFRESH APP
+        </button>
+    </div>
+
+    <div id="file-list">Loading titles...</div>
+</div>
+
+    <div id="content">
+        <button id="back-btn" onclick="closeTune()">← Back to Tune List</button>
+        <h3 id="tune-title" style="margin-top:0">Select a tune</h3>
+        <div class="nav-bar" id="setting-nav" style="display:none;">
+            </div>
+
+<div id="content">
+    <button id="back-btn" onclick="closeTune()">← Back to Tune List</button>
+    <h3 id="tune-title" style="margin-top:0">Select a tune</h3>
+
+    <div id="audio-controls" style="margin-bottom: 20px; background: #eee; padding: 10px; border-radius: 8px;">
+        <div id="midi-player"></div>
+    </div>
+
+    <div class="nav-bar" id="setting-nav" style="display:none;"></div>
+    <div id="paper"></div>
+</div>
+
+        <div id="paper"></div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

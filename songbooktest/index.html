@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fo'c'sle Songbook</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="options-container">
+        <button id="options-toggle" onclick="toggleOptions()">Options ⚙️</button>
+        <div id="options-menu">
+            <button id="fav-filter-btn" onclick="toggleFavoritesFilter()">❤️ Favorites Only</button>
+            <button class="clear-favs-btn" onclick="clearAllFavorites()">🗑️ Clear All</button>
+
+            <hr style="width:100%; border:0; border-top:1px solid #ccc;">
+            <button onclick="openFAQ()">❓ FAQ</button>
+            <button onclick="openQR()">📱 QR Code</button>
+            <button onclick="getRandomSong()">🎲 Random</button>
+            <button onclick="toggleTheme()">🌓 Dark/Light</button>
+            <button onclick="toggleAlignment()">▤ Left/Center</button>
+            <button onclick="changeFontSize(1)">A+</button>
+            <button onclick="changeFontSize(-1)">A-</button>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑ Top</button>
+        </div>
+    </div>
+
+    <header>
+    <img src="Logo.png" alt="The Fo'c'sle" id="site-logo">
+    <img src="SNAS.png" alt="Saturday Night at Sea by George Cruickshank" id="banner-image">
+    <h1>SEA SHANTY & FOLK SONG SESSION SONGBOOK</h1>
+
+    <div class="search-wrap">
+        <input type="text" id="songSearch" placeholder="Search for a song title..." onkeyup="filterSongs()">
+    </div>
+
+    <div class="tags-wrap">
+        <select id="tagFilter" onchange="filterSongs()">
+            <option value="">All Tags</option>
+            <option value="Australian">Australian</option>
+            <option value="Irish">Irish</option>
+            <option value="Scottish">Scottish</option>
+            <option value="Maritime">Maritime</option>
+            <option value="Shanty">Shanty</option>
+            <option value="Bush">Bush</option>
+            <option value="Convict / Transportation">Convict</option>
+            <option value="Hard Times">Hard Times</option>
+            <option value="Chorus-Heavy">Chorus-Heavy</option>
+            <option value="Humorous">Humorous</option>
+            <option value="Drinking Song">Drinking Song</option>
+            <option value="Rebel / Political">Rebel / Political</option>
+        </select>
+    </div>
+</header>
+
+<nav id="toc"><p>Loading Song List...</p></nav>
+
+    <main id="songbook"></main>
+
+<div id="qr-modal" onclick="closeQR()">
+    <div id="qr-content">
+        <img src="qr.png" alt="QR Code">
+        <p>Use this QR code to share this page with others</p>
+    </div>
+</div>
+
+    <div id="faq-modal" onclick="closeFAQ()">
+        <div id="faq-content" onclick="event.stopPropagation()">
+            <button id="faq-close" onclick="closeFAQ()">✕</button>
+            <h2>Frequently Asked Questions</h2>
+
+            <p><b>What's going on here?</b><br>
+            We're "The Fo'c'sle," a bunch of singing enthusiasts who gather at <a href="https://roseandcrownpub.com.au/">Rose &amp; Crown</a> on the 2nd and 4th Friday of every month to sing our favourite sea shanties and folk songs. <ahref="https://maps.app.goo.gl/MKSnyLJnuGAfb3176">Google Maps Link.</a></p>
+
+            <p><b>What's a Sea Shanty?</b><br>
+            A sea shanty, or chanty, is a genre of folk songs that are loosely descended from work songs that arose in the 18th century Europe used to coordinate a group of sailors around a rhythmic task, like pulling up an anchor or hauling on ropes. Of course, there have been countless influences from all over the world since. They're often (but not always) characterised by a single leading singer initiating a call and response from everyone else and a regular, clear rhythm.<br><br>
+            Some examples of shanty style songs regularly heard here include Barrett's Privateers, The Wellermen, Leave Her Johnny, Bully in the Alley, Drunken Sailor, Santiana, South Australia and Lowlands Away among many others.<br><br>
+            We acknowledge that many sea shanties were created in a bygone era and some may contain certain lyrics or language which are not acceptable by today's standards. We welcome folk from all walks of life and cultures and would love for you to come and sing with us. However, we do ask that you carefully consider the lyrics and language of your chosen songs before singing them.</p>
+
+            <p><b>Do you only sing Sea Shanties?</b><br>
+            No, we sing all sorts of other folk songs too such as Skye Boat Song, Northwest Passage, One More Pull, Shenandoah, Wild Mountain Thyme and Oak and Ash and Thorn.</p>
+
+            <p><b>Can I join in?</b><br>
+            Yes! Please do! Everyone is welcome, so no matter your ability you can join the crew!</p>
+
+            <p><b>Can I lead a song?</b><br>
+            Absolutely! When you're ready to go just wait til the end of a song, ring the bell and let everyone know what you're going to sing and give them a moment to find the words (a little more if they aren't in the songbook) and then go for it!</p>
+
+            <p><b>Do you take requests?</b><br>
+            If you have a song you like but don't feel confident leading it, ask around and it's very possible someone else in the group can do it, but no guarantees.</p>
+
+            <p><b>Will you sing Happy Birthday for someone?</b><br>
+            Sure! Bring your party to us and let us know the birthday person's name — we also have a birthday shanty!</p>
+
+            <p><b>When is the next Shanty Night?</b><br>
+            The Fo'c'sle meets on the 2nd and 4th Friday of each month at the Rose &amp; Crown in South Bank, Brisbane. The Next Sessions are on the 10th of April, 24th of April, 8th of May, 22nd of May, 12th of June, 26th of June, 10th of July, 24th of July, 14th of August, 28th of August, 11th of September, 25th of September, 9th of October, 23rd of October, 13th of November, 27th of November, 11th of December, 25th of December. Follow us on <a href="https://www.facebook.com/profile.php?id=61557637504511">Facebook</a> to get updates on future sessions</p>
+
+            <p><b>Who made this website?</b><br>
+            This website was created by <a href="https://gentlefolk.quest">Genna</a>, using the <a href="https://doomshroom99.wixsite.com/focslesongbook">Fo'c'sle Songbook</a> compiled by Graham White, <a href="https://ozfolksongaday.blogspot.com">John Thompson's Oz Folk Song a Day</a> blog and other sources.
+
+            <p><b>Copyright Notice</b><br>
+This songbook contains lyrics to traditional and contemporary folk songs collected for use at our community singing sessions. We acknowledge that some songs remain under copyright. This website is non-commercial, free to access, and exists solely to support communal singing. No profit is made from this content. If you are a copyright holder and have concerns about your work appearing here, please contact us and we will promptly remove it.</p>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+    </body>
+</html>
