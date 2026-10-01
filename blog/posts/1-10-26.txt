@@ -1,3 +1,9 @@
 Date: 1st October 2026
 
-This is atest post *including some markup things* **bold things** whatever
+Here is an image:
+![A nice description of the picture](/images/photo.jpg)
+
+Here is an embedded YouTube video (use the /embed/ URL):
+![video](https://www.youtube.com/embed/toOBWr3ygGg)
+
+And a link to [My Music](https://gentlefolk.quest/music/).

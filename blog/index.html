@@ -89,6 +89,37 @@ h1 {
   margin: 0.5rem 0;
 }
 
+.post-body a {
+  color: #d1c4e9;
+  text-decoration: underline;
+}
+
+.post-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+  display: block;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  height: 0;
+  overflow: hidden;
+  margin: 1rem 0;
+  border-radius: 8px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 #loading {
   font-style: italic;
   opacity: 0.8;
@@ -109,7 +140,7 @@ h1 {
   </div>
 
   <script>
-    // List your post text files in /blog/posts/ here
+    // Add text filenames from /blog/posts/ here:
     const postFiles = [
       '1-10-26.txt'
     ];
@@ -129,11 +160,20 @@ h1 {
 
       let content = bodyLines.join('\n').trim();
 
-      // Simple Inline Markup Parsing
+      // Markup Parsing
       content = content
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // **bold**
-        .replace(/\*(.*?)\*/g, '<em>$1</em>')             // *italic*
-        .replace(/\n\n+/g, '</p><p>');                   // Paragraph breaks
+        // Videos: ![video](embed_url)
+        .replace(/!\[video\]\((.*?)\)/g, '<div class="video-container"><iframe src="$1" allowfullscreen></iframe></div>')
+        // Images: ![alt](img_url)
+        .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1">')
+        // Links: [text](url)
+        .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+        // Bold: **text**
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        // Italics: *text*
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        // Paragraphs
+        .replace(/\n\n+/g, '</p><p>');
 
       return `${dateHtml}<div class="post-body"><p>${content}</p></div>`;
     }
