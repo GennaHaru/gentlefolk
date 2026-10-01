@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="fediverse:creator" content="HaruEb@mk.absturztau.be" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Genna's Gentlefolk | Blog</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(180deg, #4B0082 0%, #000000 100%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  color: white;
+  padding: 2rem 0;
+  box-sizing: border-box;
+}
+
+.container {
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid white;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  margin: 0.5rem 0 0.2rem;
+}
+
+.tagline {
+  font-size: 0.95rem;
+  color: #f0f0f0;
+  margin-bottom: 1.5rem;
+}
+
+.nav-link {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.nav-link:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateY(-2px);
+}
+
+.post {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.post-date {
+  font-size: 0.85rem;
+  color: #d1c4e9;
+  margin-bottom: 0.8rem;
+  font-weight: bold;
+}
+
+.post-body {
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.post-body p {
+  margin: 0.5rem 0;
+}
+
+#loading {
+  font-style: italic;
+  opacity: 0.8;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <a href="/"><img src="/genna.jpg" alt="Genna's Gentlefolk" class="avatar"></a>
+    <h1>Genna's Gentlefolk</h1>
+    <p class="tagline">Blog & Updates</p>
+
+    <a href="/" class="nav-link">← Back to Main Page</a>
+
+    <div id="posts-container">
+      <div id="loading">Loading posts...</div>
+    </div>
+  </div>
+
+  <script>
+    // List your post text files in /blog/posts/ here
+    const postFiles = [
+      '1-10-26.txt'
+    ];
+
+    function parseSimpleMarkup(text) {
+      const lines = text.split('\n');
+      let dateHtml = '';
+      let bodyLines = [];
+
+      lines.forEach(line => {
+        if (line.startsWith('Date:')) {
+          dateHtml = `<div class="post-date">${line.replace('Date:', '').trim()}</div>`;
+        } else {
+          bodyLines.push(line);
+        }
+      });
+
+      let content = bodyLines.join('\n').trim();
+
+      // Simple Inline Markup Parsing
+      content = content
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // **bold**
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')             // *italic*
+        .replace(/\n\n+/g, '</p><p>');                   // Paragraph breaks
+
+      return `${dateHtml}<div class="post-body"><p>${content}</p></div>`;
+    }
+
+    async function loadPosts() {
+      const container = document.getElementById('posts-container');
+      container.innerHTML = '';
+
+      for (const fileName of postFiles) {
+        try {
+          const response = await fetch(`./posts/${fileName}`);
+          if (!response.ok) continue;
+
+          const text = await response.text();
+          const postElement = document.createElement('article');
+          postElement.className = 'post';
+          postElement.innerHTML = parseSimpleMarkup(text);
+          container.appendChild(postElement);
+        } catch (err) {
+          console.error(`Failed to load post ${fileName}:`, err);
+        }
+      }
+
+      if (container.children.length === 0) {
+        container.innerHTML = '<p>No posts found.</p>';
+      }
+    }
+
+    loadPosts();
+  </script>
+</body>
+</html>
